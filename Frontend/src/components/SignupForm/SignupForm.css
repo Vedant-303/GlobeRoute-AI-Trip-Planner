@@ -1,0 +1,99 @@
+.signupForm {
+  background-color: #fafafa;
+  border-radius: 10px;
+  padding: 40px 60px;
+  color: #1d1d1d;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  box-shadow: 0 1px 3px 2px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+  transform: rotateY(180deg) translate(0, -50%);
+}
+
+.signupForm p {
+  text-align: center;
+}
+
+.main {
+  font-family: "Red Hat Display", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+form {
+  margin-top: 40px;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 2px solid #1d1d1d80;
+  width: 100%;
+  font-size: 16px;
+}
+
+.emailWrapper {
+  margin: 15px 0;
+}
+
+label {
+  font-size: 14px;
+  color: #1d1d1d;
+}
+
+button {
+  padding: 10px 20px;
+  color: #fafafa;
+  background-color: #3272fa;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  width: 100%;
+  transition: all ease 0.1s;
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+hr {
+  border: 1px solid #3271fa79;
+  margin: 20px 0 10px 0;
+}
+
+.support {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.googleAuth {
+  width: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 8px 2px;
+  border-radius: 6px;
+  border: 1px solid #1d1d1d34;
+  margin: 0px auto 30px;
+  cursor: pointer;
+  transition: all ease 0.1s;
+  color: #1d1d1d;
+}
+
+.googleAuth:active {
+  transform: scale(0.9);
+}
+
+.googleAuth img {
+  height: 20px;
+}
+
+.loginLink {
+  color: #3272fa;
+  font-weight: 600;
+  cursor: pointer;
+}
