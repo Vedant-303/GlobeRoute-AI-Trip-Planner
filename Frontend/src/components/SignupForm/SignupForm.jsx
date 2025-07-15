@@ -1,7 +1,9 @@
 import { useState } from "react";
 import "./SignupForm.css";
+import API from "../../utils/axios";
+import { toast } from "react-toastify";
 
-const SignupForm = ({onFlip}) => {
+const SignupForm = ({ onFlip }) => {
   const [data, setData] = useState({});
 
   const changeHandler = (event) => {
@@ -11,9 +13,19 @@ const SignupForm = ({onFlip}) => {
     setData((values) => ({ ...values, [name]: value }));
   };
 
-  const formHandler = (event) => {
+  const formHandler = async (event) => {
     event.preventDefault();
-    console.log(data);
+
+    try {
+      const response = await API.post("/auth/signup", data);
+      toast.success("Signup successful! Please log in.");
+    } catch (err) {
+      console.error(
+        "Signup error:",
+        err.response?.data?.message || err.message
+      );
+      toast.error(err.response?.data?.message);
+    }
   };
 
   return (
@@ -23,7 +35,7 @@ const SignupForm = ({onFlip}) => {
         Sign up to explore AI-generated <br /> itineraries, trending
         destinations, and much more
       </p>
-      <form onSubmit={formHandler}>
+      <form onSubmit={formHandler} method="POST">
         <div className="nameWrapper">
           <label htmlFor="name">Name</label>
           <br />
@@ -41,7 +53,7 @@ const SignupForm = ({onFlip}) => {
           <br />
           <input
             id="signUpEmail"
-            type="text"
+            type="email"
             placeholder="Enter Email"
             name="email"
             onChange={changeHandler}
@@ -71,7 +83,10 @@ const SignupForm = ({onFlip}) => {
         <p>Sign up with Google</p>
       </button>
       <p>
-        Have an account? <span className="loginLink" onClick={onFlip}>Login</span>
+        Have an account?{" "}
+        <span className="loginLink" onClick={onFlip}>
+          Login
+        </span>
       </p>
     </div>
   );

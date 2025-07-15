@@ -27,6 +27,7 @@ form {
 }
 
 input[type="text"],
+input[type="email"],
 input[type="password"] {
   padding: 8px 16px;
   border-radius: 6px;

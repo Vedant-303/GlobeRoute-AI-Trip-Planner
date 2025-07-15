@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./LoginForm.css";
+import API from "../../utils/axios";
+import { toast } from "react-toastify";
 
-const LoginForm = ({onFlip}) => {
+const LoginForm = ({ onFlip }) => {
   const [data, setData] = useState({});
+  const navigator = useNavigate();
 
   const changeHandler = (event) => {
     const name = event.target.name;
@@ -11,9 +15,20 @@ const LoginForm = ({onFlip}) => {
     setData((values) => ({ ...values, [name]: value }));
   };
 
-  const formHandler = (event) => {
+  const formHandler = async (event) => {
     event.preventDefault();
-    console.log(data);
+
+    try {
+      const response = await API.post("/auth/login", data);
+      toast.success("Login successful! Redirecting.");
+      localStorage.setItem("token", response.data.token);
+      setTimeout(() => {
+        navigator("/landing");
+      }, 3500);
+    } catch (err) {
+      // console.error("Login error:", err.response?.data?.message || err.message);
+      toast.error(err.response?.data?.message);
+    }
   };
 
   return (
@@ -58,7 +73,12 @@ const LoginForm = ({onFlip}) => {
         <img src="google-logo.svg" alt="Google logo" />
         <p>Login with Google</p>
       </button>
-      <p>Don't have an account? <span className="signupLink" onClick={onFlip}>Sign up</span></p>
+      <p>
+        Don't have an account?{" "}
+        <span className="signupLink" onClick={onFlip}>
+          Sign up
+        </span>
+      </p>
     </div>
   );
 };
