@@ -1,0 +1,27 @@
+.extra {
+    background-color: #ffffff;
+    padding: 60px;
+}
+
+.extra .main {
+    font-size: 60px;
+    font-family: "Red Hat Display", sans-serif;
+    text-align: center;
+    line-height: 100px;
+    font-weight: 400;
+}
+
+.extraImage {
+    height: 100px;
+    width: 200px;
+    background-color: bisque;
+    margin: 0 10px -30px 10px;
+    border-radius: 50px;
+}
+
+.secondary {
+    font-size: 20px;
+    color: #1d1d1d84;
+    text-align: center;
+    margin-top: 40px;
+}

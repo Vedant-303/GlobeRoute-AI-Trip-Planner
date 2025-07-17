@@ -5,6 +5,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: "TikTok Sans", sans-serif;
+  color: #1d1d1d;
 }
 
 body {
@@ -18,4 +19,8 @@ body {
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-end;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

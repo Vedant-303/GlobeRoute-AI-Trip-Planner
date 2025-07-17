@@ -1,0 +1,28 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.logo p {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Red Hat Display", sans-serif;
+}
+
+.profile {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: black;
+}

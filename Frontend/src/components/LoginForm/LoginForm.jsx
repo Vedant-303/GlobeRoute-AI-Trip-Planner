@@ -23,10 +23,9 @@ const LoginForm = ({ onFlip }) => {
       toast.success("Login successful! Redirecting.");
       localStorage.setItem("token", response.data.token);
       setTimeout(() => {
-        navigator("/landing");
+        navigator("/");
       }, 3500);
     } catch (err) {
-      // console.error("Login error:", err.response?.data?.message || err.message);
       toast.error(err.response?.data?.message);
     }
   };
