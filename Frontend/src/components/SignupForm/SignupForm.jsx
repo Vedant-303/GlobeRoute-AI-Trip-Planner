@@ -77,12 +77,7 @@ const SignupForm = ({ onFlip }) => {
         </button>
       </form>
       <hr />
-      <p className="support">or</p>
-      <button className="googleAuth" type="button">
-        <img src="google-logo.svg" alt="Google logo" />
-        <p>Sign up with Google</p>
-      </button>
-      <p>
+      <p className="footer">
         Have an account?{" "}
         <span className="loginLink" onClick={onFlip}>
           Login

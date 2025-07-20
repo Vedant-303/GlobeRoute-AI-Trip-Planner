@@ -21,10 +21,13 @@ const LoginForm = ({ onFlip }) => {
     try {
       const response = await API.post("/auth/login", data);
       toast.success("Login successful! Redirecting.");
+
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
       setTimeout(() => {
         navigator("/");
-      }, 3500);
+      }, 2000);
     } catch (err) {
       toast.error(err.response?.data?.message);
     }
@@ -67,12 +70,7 @@ const LoginForm = ({ onFlip }) => {
         </button>
       </form>
       <hr />
-      <p className="support">or</p>
-      <button className="googleAuth" type="button">
-        <img src="google-logo.svg" alt="Google logo" />
-        <p>Login with Google</p>
-      </button>
-      <p>
+      <p className="footer">
         Don't have an account?{" "}
         <span className="signupLink" onClick={onFlip}>
           Sign up

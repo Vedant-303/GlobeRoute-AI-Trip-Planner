@@ -1,7 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import "./TripForm.css";
 
 const TripForm = () => {
+  const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
+
   const currentDate = new Date();
   const date = currentDate.getDate();
   let month = currentDate.getMonth();
@@ -13,18 +19,52 @@ const TripForm = () => {
 
   const today = `${year}-${month}-${date}`;
 
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    origin: "",
+    destination: "",
+    fromDate: "",
+    toDate: "",
+    people: 1,
+    group: "solo",
+    budget: "cheap",
+  });
 
   const changeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
 
-    setFormData((values) => ({ ...values, [name]: value }));
+    setFormData((values) => ({
+      ...values,
+      [name]: value,
+    }));
   };
 
-  const formHandler = (event) => {
+  const formHandler = async (event) => {
     event.preventDefault();
-    console.log(formData);
+
+    const storedUser = localStorage.getItem("user");
+    if (storedUser == null) {
+      toast.warn("Please Login First");
+      navigate("/auth", { replace: true });
+    } else {
+      setUser(JSON.parse(storedUser));
+      navigate("/loading", { replace: true });
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/api/trip/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      navigate("/trip", { state: { trip: data.trip } });
+    } catch (error) {
+      console.error("Error generating itinerary:", error);
+    }
   };
 
   return (
@@ -36,7 +76,7 @@ const TripForm = () => {
           type="text"
           name="origin"
           id="origin"
-          placeholder="Origin"
+          placeholder="Pune, Maharashtra"
           onChange={changeHandler}
           required
         />
@@ -48,14 +88,14 @@ const TripForm = () => {
           type="text"
           name="destination"
           id="destination"
-          placeholder="Destination"
+          placeholder="Goa"
           onChange={changeHandler}
           required
         />
       </div>
 
       <div className="formElement">
-        <label htmlFor="date">Date</label>
+        <label htmlFor="fromDate">Date</label>
         <div className="dateWrapper">
           <input
             type="date"
@@ -95,16 +135,16 @@ const TripForm = () => {
         <select name="group" id="group" required onChange={changeHandler}>
           <option value="">Select Group Type</option>
 
-          <option value="solo" defaultChecked onChange={changeHandler}>
+          <option value="solo" id="group" onChange={changeHandler}>
             Solo
           </option>
-          <option value="couple" onChange={changeHandler}>
+          <option value="couple" id="group" onChange={changeHandler}>
             Couple
           </option>
-          <option value="family" onChange={changeHandler}>
+          <option value="family" id="group" onChange={changeHandler}>
             Family
           </option>
-          <option value="friends" onChange={changeHandler}>
+          <option value="friends" id="group" onChange={changeHandler}>
             Friends
           </option>
         </select>
@@ -114,13 +154,13 @@ const TripForm = () => {
         <label htmlFor="budget">Budget</label>
         <select name="budget" id="budget" required onChange={changeHandler}>
           <option value="">Select Budget</option>
-          <option value="cheap" onChange={changeHandler}>
+          <option value="cheap" id="budget" onChange={changeHandler}>
             Cheap
           </option>
-          <option value="mid-range" onChange={changeHandler}>
+          <option value="mid-range" id="budget" onChange={changeHandler}>
             Mid-Range
           </option>
-          <option value="expensive" onChange={changeHandler}>
+          <option value="expensive" id="budget" onChange={changeHandler}>
             Expensive
           </option>
         </select>

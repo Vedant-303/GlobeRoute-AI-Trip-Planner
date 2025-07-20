@@ -1,0 +1,177 @@
+.tripDetails {
+  margin: 40px;
+  font-size: 20px;
+  text-align: justify;
+}
+
+.tripTitle {
+  font-size: 44px;
+  font-weight: 500;
+}
+
+.durationNLocation {
+  display: flex;
+  gap: 60px;
+  font-size: 18px;
+}
+
+.imageWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.bigImage {
+  height: 60vh;
+  width: 40vw;
+  border-radius: 10px;
+}
+
+.smallImageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.smallImage {
+  height: calc(30vh - 5px);
+  width: calc((100vw - 40vw - 100px) / 2);
+  border-radius: 10px;
+}
+
+.tagNPrice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  font-size: 18px;
+}
+
+.tag {
+  border: 2px solid #3272fa;
+  padding: 4px 10px;
+  margin-right: 10px;
+  border-radius: 40px;
+}
+
+.price {
+  background-color: #3272fa;
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: #ffffff;
+}
+
+.weatherTitle,
+.threatTitle,
+.itineraryTitle,
+.transportTitle,
+.cuisineTitle,
+.localTransport,
+.localLanguageSlangs,
+.accomodationTitle,
+.emergencyTitle {
+  padding-top: 30px;
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.tripDetails p {
+  margin-top: 20px;
+}
+
+.day {
+  font-size: 26px;
+}
+
+.text {
+  margin: 0 40px;
+}
+
+@media screen and (max-width: 1024px) {
+  .tripTitle {
+    font-size: 36px;
+  }
+
+  .day {
+    font-size: 22px;
+  }
+
+  .tripDetails {
+    margin: 30px;
+    font-size: 18px;
+  }
+
+  .text {
+    margin: 0 20px;
+  }
+
+  .bigImage {
+    height: 50vh;
+    max-width: 100%;
+  }
+
+  .smallImage {
+    height: 25vh;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tripTitle {
+    font-size: 26px;
+  }
+
+  .tripDetails {
+    margin: 40px;
+    font-size: 18px;
+  }
+
+  .day {
+    font-size: 20px;
+  }
+
+  .durationNLocation {
+    gap: 20px;
+  }
+
+  .tagNPrice {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .text {
+    margin: 0 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .tripTitle {
+    font-size: 24px;
+  }
+
+  .tripDetails {
+    margin: 40px;
+    font-size: 16px;
+  }
+
+  .day {
+    font-size: 18px;
+  }
+
+  .bigImage,
+  .smallImage {
+    height: auto;
+    width: 100%;
+  }
+
+  .smallImageContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .smallImage {
+    width: calc(50% - 5px);
+  }
+}

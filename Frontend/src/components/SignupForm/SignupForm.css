@@ -65,32 +65,8 @@ hr {
   margin: 20px 0 10px 0;
 }
 
-.support {
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-.googleAuth {
-  width: 50%;
-  background-color: #fff;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 8px 2px;
-  border-radius: 6px;
-  border: 1px solid #1d1d1d34;
-  margin: 0px auto 30px;
-  cursor: pointer;
-  transition: all ease 0.1s;
-  color: #1d1d1d;
-}
-
-.googleAuth:active {
-  transform: scale(0.9);
-}
-
-.googleAuth img {
-  height: 20px;
+.footer {
+  margin-top: 30px;
 }
 
 .loginLink {

@@ -1,27 +1,69 @@
 .extra {
-    background-color: #ffffff;
-    padding: 60px;
+  background-color: #ffffff;
+  padding: 60px;
 }
 
 .extra .main {
-    font-size: 60px;
-    font-family: "Red Hat Display", sans-serif;
-    text-align: center;
-    line-height: 100px;
-    font-weight: 400;
+  font-size: 60px;
+  font-family: "Red Hat Display", sans-serif;
+  text-align: center;
+  line-height: 100px;
+  font-weight: 400;
 }
 
 .extraImage {
-    height: 100px;
-    width: 200px;
-    background-color: bisque;
-    margin: 0 10px -30px 10px;
-    border-radius: 50px;
+  height: 100px;
+  width: 200px;
+  background-color: bisque;
+  margin: 0 10px -30px 10px;
+  border-radius: 50px;
 }
 
 .secondary {
-    font-size: 20px;
-    color: #1d1d1d84;
-    text-align: center;
-    margin-top: 40px;
+  font-size: 20px;
+  color: #1d1d1d84;
+  text-align: center;
+  margin-top: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .extra {
+    padding: 40px 20px;
+  }
+
+  .extra .main {
+    font-size: 42px;
+    line-height: 80px;
+  }
+
+  .extraImage {
+    height: 80px;
+    width: 160px;
+    margin: 0 8px -20px 8px;
+  }
+
+  .secondary {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .extra {
+    padding: 30px 16px;
+  }
+
+  .extra .main {
+    font-size: 32px;
+    line-height: 50px;
+  }
+
+  .extraImage {
+    height: 60px;
+    width: 120px;
+    margin: 0 6px -15px 6px;
+  }
+
+  .secondary {
+    font-size: 16px;
+  }
 }

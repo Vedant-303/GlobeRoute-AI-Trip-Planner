@@ -11,7 +11,7 @@ const Hero = () => {
         </p>
         <p className="subHeading">
           GlobeRoute uses AI to craft your perfect trip - from transport and
-          stays to <br /> food and must visit spots - all tailored to your
+          stays to food and must visit spots - all tailored to your
           budget and time.
         </p>
       </div>

@@ -1,28 +1,132 @@
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 40px;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .logo img {
-    height: 50px;
+  height: 50px;
 }
 
 .logo p {
-    font-size: 18px;
-    font-weight: 600;
-    font-family: "Red Hat Display", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Red Hat Display", sans-serif;
 }
 
 .profile {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    background-color: black;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
+
+.intro {
+  text-align: end;
+}
+
+.intro p:first-child {
+  font-size: 14px;
+}
+
+.intro p:last-child {
+  font-size: 18px;
+}
+
+.profileImg {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.profileImg img {
+  height: 60px;
+}
+
+.popup-menu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  width: 140px;
+  z-index: 999;
+  font-size: 0.95rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: all 0.2s ease;
+}
+
+.popup-menu p {
+  padding: 0.6rem 1rem;
+  margin: 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profileImg:hover .popup-menu,
+.popup-menu.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.popup-menu p:hover {
+  background: #f2f2f2;
+}
+
+ @media screen and (max-width: 768px) {
+  nav {
+    margin: 20px 40px;
+  }
+
+  .logo p {
+    font-size: 16px;
+  }
+
+  .intro p:first-child {
+    font-size: 14px;
+  }
+
+  .intro p:last-child {
+    font-size: 16px;
+  }
+
+}
+
+
+@media screen and (max-width: 480px) {
+  .logo img {
+    height: 40px;
+  }
+
+  .profileImg {
+    height: 45px;
+    width: 45px;
+  }
+
+  .profileImg img {
+    height: 50px;
+  }
+
+  .logo p {
+    font-size: 15px;
+  }
+
+  .intro p:last-child {
+    font-size: 15px;
+  }
+} 
