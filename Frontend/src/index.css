@@ -7,6 +7,7 @@
   box-sizing: border-box;
   font-family: "TikTok Sans", sans-serif;
   color: #1d1d1d;
+  scroll-behavior: smooth;
 }
 
 body {

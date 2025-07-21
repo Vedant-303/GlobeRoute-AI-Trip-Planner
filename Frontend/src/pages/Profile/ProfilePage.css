@@ -19,6 +19,12 @@
   margin: 40px;
 }
 
-.createTripBtn {
-    width: 120px;
+.btnWrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.createTripBtn,
+.editProfileBtn {
+    width: 110px;
 }

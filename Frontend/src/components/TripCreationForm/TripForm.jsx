@@ -93,7 +93,7 @@ const TripForm = () => {
           type="text"
           name="destination"
           id="destination"
-          placeholder="Goa"
+          placeholder="Tokyo, Japan"
           onChange={changeHandler}
           required
         />
