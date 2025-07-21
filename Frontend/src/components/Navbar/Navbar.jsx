@@ -1,19 +1,30 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
+import API from "../../utils/axios";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
-  const placeHolder = "userPicPlaceHolder.png";
+  const placeHolder = "/userPicPlaceHolder.png";
 
   const [popupOpen, setPopupOpen] = useState(false);
   const popupRef = useRef();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    const fetchUser = async () => {
+      try {
+        const res = await API.get("/auth/me", { withCredentials: true });
+        setUser(res.data);
+      } catch (err) {
+        console.log("Not logged in");
+        setUser(null);
+      }
+    };
+
+    fetchUser();
 
     const handleClickOutside = (e) => {
       if (popupRef.current && !popupRef.current.contains(e.target)) {
@@ -22,21 +33,25 @@ const Navbar = () => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    toast.warn("You have been logged out!");
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
+  const handleLogout = async () => {
+    try {
+      await API.post("/auth/logout", {}, { withCredentials: true });
+      toast.warn("You have been logged out!");
+      setUser(null);
+      navigate("/");
+    } catch (err) {
+      toast.error("Logout failed. Try again.");
+    }
   };
 
   return (
     <nav>
-      <div className="logo" onClick={() => (window.location.href = "/")}>
+      <div className="logo" onClick={() => navigate("/")}>
         <img src="/logo.png" alt="Globe Route Logo" />
         <p>GlobeRoute</p>
       </div>
@@ -51,7 +66,7 @@ const Navbar = () => {
             className="profileImg"
             onClick={() => setPopupOpen((prev) => !prev)}
           >
-            <img src={user.image || placeHolder} alt="Profile" />
+            <img src={user.image ? user.image : placeHolder} alt="Profile" />
             {popupOpen && (
               <div
                 className={`popup-menu ${popupOpen ? "active" : ""}`}

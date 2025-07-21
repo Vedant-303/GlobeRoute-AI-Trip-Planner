@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const LoginForm = ({ onFlip }) => {
   const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigator = useNavigate();
 
   const changeHandler = (event) => {
@@ -18,18 +19,23 @@ const LoginForm = ({ onFlip }) => {
   const formHandler = async (event) => {
     event.preventDefault();
 
+    setLoading(true);
     try {
-      const response = await API.post("/auth/login", data);
+      const response = await API.post("/auth/login", data, {
+        withCredentials: true,
+      });
+  
       toast.success("Login successful! Redirecting.");
 
-      localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       setTimeout(() => {
         navigator("/");
-      }, 2000);
+      }, 1000);
     } catch (err) {
       toast.error(err.response?.data?.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -65,8 +71,8 @@ const LoginForm = ({ onFlip }) => {
             required
           />
         </div>
-        <button className="primaryBtn" type="submit">
-          Login
+        <button className="primaryBtn" type="submit" disabled={loading}>
+          {loading ? "Processing..." : "Login"}
         </button>
       </form>
       <hr />

@@ -101,7 +101,6 @@ Return ONLY valid, clean JSON with this exact structure (no explanations, no mar
     const result = await model.generateContent(prompt);
     const text = result.response.text();
     const json = JSON.parse(text);
-    console.log(json);
     return json;
   } catch (e) {
     throw new Error("Failed to parse Gemini response as JSON");

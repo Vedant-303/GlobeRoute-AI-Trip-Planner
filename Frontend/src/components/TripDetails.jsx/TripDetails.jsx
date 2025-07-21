@@ -1,62 +1,68 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
+import { fetchUnsplashImages } from "../../utils/unsplash";
 import html2pdf from "html2pdf.js";
-import axios from "axios";
-import "./Trip.css";
-
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../Navbar/Navbar";
 import TripNav from "../../components/TripNav/TripNav";
 
-const Trip = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const trip = location.state?.trip;
-  const [images, setImages] = useState([]);
+const TripDetails = () => {
+  const { id } = useParams();
+  const [trip, setTrip] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const tripRef = useRef();
-  const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
   const downloadPDF = () => {
-    const element = tripRef.current;
-
-    const opt = {
-      margin: 0.2,
-      filename: `${trip.name}-trip-details.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 1.5 },
-      jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+      const element = tripRef.current;
+  
+      const opt = {
+        margin: 0.2,
+        filename: `${trip.name}-trip-details.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 1.5 },
+        jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+      };
+  
+      html2pdf().set(opt).from(element).save();
     };
 
-    html2pdf().set(opt).from(element).save();
-  };
-
   useEffect(() => {
-    if (!trip) {
-      navigate("/");
-      return;
-    }
-
-    const fetchImages = async () => {
+    const fetchTripDetails = async () => {
       try {
-        const res = await axios.get(`https://api.unsplash.com/search/photos`, {
-          params: {
-            query: trip.location.city,
-            per_page: 5,
-          },
-          headers: {
-            Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}`,
-          },
+        const res = await fetch(`http://localhost:3000/api/trip/${id}`, {
+          credentials: "include",
         });
-        setImages(res.data.results);
+        const data = await res.json();
+        if (data.success) {
+          setTrip(data.trip);
+        } else {
+          console.error("Failed to load trip details");
+        }
       } catch (err) {
-        console.error("Unsplash fetch error", err);
+        console.error("Error fetching trip:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchImages();
-  }, [trip, navigate]);
+    fetchTripDetails();
+  }, [id]);
 
-  if (!trip) return null;
+  const [images, setImages] = useState([]);
+
+useEffect(() => {
+  if (!trip || !trip.location?.city) return;
+
+  const fetchImages = async () => {
+    const imageResults = await fetchUnsplashImages(trip.location.city);
+    setImages(imageResults);
+  };
+
+  fetchImages();
+}, [trip]);
+
+  if (loading) return <p>Loading trip...</p>;
+  if (!trip) return <p>Trip not found</p>;
 
   return (
     <>
@@ -195,4 +201,4 @@ const Trip = () => {
   );
 };
 
-export default Trip;
+export default TripDetails;

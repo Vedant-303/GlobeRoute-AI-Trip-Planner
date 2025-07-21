@@ -8,19 +8,34 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const fetchTrips = async () => {
-      const storedUser = JSON.parse(localStorage.getItem("user"));
-      if (!storedUser?._id) return;
-
       try {
-        const res = await fetch(
-          `http://localhost:3000/api/trip/user-trips/${storedUser._id}`
+        const userRes = await fetch("http://localhost:3000/api/auth/me", {
+          credentials: "include",
+        });
+
+        const userData = await userRes.json();
+
+        if (!userData?._id) {
+          console.warn("User not authenticated or ID missing");
+          return;
+        }
+
+        const tripsRes = await fetch(
+          `http://localhost:3000/api/trip/user-trips/${userData._id}`,
+          {
+            credentials: "include",
+          }
         );
-        const data = await res.json();
-        if (data.success) {
-          setTrips(data.trips);
+
+        const tripsData = await tripsRes.json();
+
+        if (tripsData.success) {
+          setTrips(tripsData.trips);
+        } else {
+          console.error("Failed to fetch trips:", tripsData.message);
         }
       } catch (error) {
-        console.error("Failed to fetch trips:", error);
+        console.error("Error fetching trips:", error);
       }
     };
 
@@ -43,6 +58,7 @@ const ProfilePage = () => {
             Create Trip
           </button>
         </div>
+
         <div className="trips">
           {trips.length > 0 ? (
             trips.map((trip, idx) => <TripCard key={idx} trip={trip} />)

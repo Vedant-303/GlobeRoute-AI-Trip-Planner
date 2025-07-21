@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 const SignupForm = ({ onFlip }) => {
   const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const changeHandler = (event) => {
     const name = event.target.name;
@@ -16,15 +17,21 @@ const SignupForm = ({ onFlip }) => {
   const formHandler = async (event) => {
     event.preventDefault();
 
+    setLoading(true);
     try {
-      const response = await API.post("/auth/signup", data);
+      const response = await API.post("/auth/signup", data, {
+        withCredentials: true,
+      });
       toast.success("Signup successful! Please log in.");
+      setTimeout(() => onFlip(), 1000);
     } catch (err) {
       console.error(
         "Signup error:",
         err.response?.data?.message || err.message
       );
       toast.error(err.response?.data?.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,8 +79,8 @@ const SignupForm = ({ onFlip }) => {
             required
           />
         </div>
-        <button className="primaryBtn" type="submit">
-          Sign Up
+        <button className="primaryBtn" type="submit" disabled={loading}>
+          {loading ? "Processing..." : "Sign Up"}
         </button>
       </form>
       <hr />

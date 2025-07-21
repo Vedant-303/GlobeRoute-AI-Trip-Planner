@@ -6,6 +6,7 @@ import LandingPage from "./pages/Landing/LandingPage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import Trip from "./pages/AIGenTrip/Trip";
 import Spinner from "./components/Spinner/Spinner";
+import TripDetails from "./components/TripDetails.jsx/TripDetails";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/trip" element={<Trip />}></Route>
         <Route path="/profile" element={<ProfilePage />}></Route>
         <Route path="/loading" element={<Spinner />}></Route>
+        <Route path="/trip/:id" element={<TripDetails />} />
       </Routes>
     </BrowserRouter>
   );

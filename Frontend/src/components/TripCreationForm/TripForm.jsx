@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import "./TripForm.css";
 
 const TripForm = () => {
-  const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
 
@@ -42,21 +41,26 @@ const TripForm = () => {
   const formHandler = async (event) => {
     event.preventDefault();
 
-    const storedUser = localStorage.getItem("user");
-    if (storedUser == null) {
-      toast.warn("Please Login First");
-      navigate("/auth", { replace: true });
-    } else {
-      setUser(JSON.parse(storedUser));
-      navigate("/loading", { replace: true });
-    }
-
     try {
+      const authRes = await fetch("http://localhost:3000/api/auth/me", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (!authRes.ok) {
+        toast.warn("Please Login First");
+        navigate("/auth", { replace: true });
+        return;
+      }
+
+      navigate("/loading", { replace: true });
+
       const response = await fetch("http://localhost:3000/api/trip/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include", 
         body: JSON.stringify(formData),
       });
 
@@ -64,6 +68,7 @@ const TripForm = () => {
       navigate("/trip", { state: { trip: data.trip } });
     } catch (error) {
       console.error("Error generating itinerary:", error);
+      toast.error("Something went wrong. Try again.");
     }
   };
 
