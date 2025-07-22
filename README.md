@@ -1,4 +1,4 @@
-# ✈️ GlobeRoute: AI Travel Planner
+# ✈️ GlobeRoute: AI Travel Generator
 
 An intelligent web application that uses Gemini AI to generate personalized travel plans based on user inputs. From destinations and budgets to detailed itineraries, this app helps users plan trips effortlessly and intuitively.
 
